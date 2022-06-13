@@ -1,0 +1,24 @@
+The first change that I have made is add a new field on the Arraydel structure to store the last position accessed by the next fit, this field 
+is called lastPosition.
+
+In order to add the next_fit algorithm, first we have to see if is the first iteration or we already did one search with this algorithm, for this 
+we have an if iside add.c, this is the following if statement: if(strategy == NEXTFIT && (int)delindex->lastPosition > -1), so if we execute with 
+the next fit option we will skip the next fit search algorithm for this time and after doing the firs fit search (only the first time) we will 
+save the las position accessed on the deleted list: 
+
+if(i == ((int)delindex->used - 1)) {
+
+    delindex->lastPosition = 0;
+
+} else {
+
+    delindex->lastPosition = i;
+}
+
+Note: if we add the record on the last position then we will start the search from the top (position 0).
+
+Finally in the main.c I have added two functions, void register_las_position(int pos, char *filename) and int get_last_nextfit_position(FILE* filename).
+The function register_las_position will write on a binary file the last position accessed by the next_fit algorithm, the function get_last_nextfit_position
+will recover the previously saved integer and with the return value of that function we will save it on the lastPosition variable on the Arraydel structure.
+
+
